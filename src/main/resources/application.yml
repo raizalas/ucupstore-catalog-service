@@ -6,3 +6,21 @@ server:
     threads:
       max: 50
       min-spare: 5
+book:
+  greeting: Hello from the configuration yaml file!
+spring:
+  output:
+    ansi:
+      enabled: always
+  application:
+    name: catalog-service
+  datasource:
+    username: user
+    password: password
+    url: jdbc:postgresql://localhost:5432/catalog
+    hikari:
+      connection-timeout: 2000
+      maximum-pool-size: 5
+  jpa:
+    hibernate:
+      ddl-auto: validate

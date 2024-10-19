@@ -19,13 +19,17 @@ public class BookJsonTest {
     @Test
     @DisplayName("Book Serialize test")
     public void toJson() throws Exception {
-        Book book = new Book("1111111111", "Northern Lights", "Ahmad Supardi", 9.90);
+        Book book = Book.builder()
+                .isbn("1111111111")
+                .title("Northern Lights")
+                .author("Ahmad Supardi")
+                .price(9.90).build();
         JsonContent<Book> jsonContent = bookJacksonTester.write(book);
 
-        assertThat(jsonContent).extractingJsonPathStringValue("@.isbn").isEqualTo(book.isbn());
-        assertThat(jsonContent).extractingJsonPathStringValue("@.title").isEqualTo(book.title());
-        assertThat(jsonContent).extractingJsonPathStringValue("@.author").isEqualTo(book.author());
-        assertThat(jsonContent).extractingJsonPathNumberValue("@.price").isEqualTo(book.price());
+        assertThat(jsonContent).extractingJsonPathStringValue("@.isbn").isEqualTo(book.getIsbn());
+        assertThat(jsonContent).extractingJsonPathStringValue("@.title").isEqualTo(book.getTitle());
+        assertThat(jsonContent).extractingJsonPathStringValue("@.author").isEqualTo(book.getAuthor());
+        assertThat(jsonContent).extractingJsonPathNumberValue("@.price").isEqualTo(book.getPrice());
     }
 
     @Test
@@ -40,7 +44,11 @@ public class BookJsonTest {
                 }
                 """;
         assertThat(bookJacksonTester.parse(content)).usingRecursiveComparison().isEqualTo(
-                new Book("1111111111", "Northern Lights", "Ahmad Supardi", 9.90)
+                Book.builder()
+                        .isbn("1111111111")
+                        .title("Northern Lights")
+                        .author("Ahmad Supardi")
+                        .price(9.90).build()
         );
     }
 }
